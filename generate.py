@@ -1,10 +1,14 @@
 import pyrosim.pyrosim as pyrosim
 pyrosim.Start_SDF("boxes.sdf")
 
+pyrosim.Send_Cube( name="Block",pos=[0, 0, 0.5],size=[1, 1, 1] )
+
+pyrosim.End()
+
+"""
 num_rows = 5       
 num_cols = 5       
 tower_height = 10      
-
 for row in range(num_rows):
     for col in range(num_cols):
         
@@ -25,3 +29,4 @@ for row in range(num_rows):
             z += height / 2
 
 pyrosim.End()
+"""
