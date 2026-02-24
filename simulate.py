@@ -1,3 +1,6 @@
+from simulation import SIMULATION
+simulation = SIMULATION()
+"""
 import pybullet as p
 import pybullet_data
 import time
@@ -7,14 +10,12 @@ from math import pi
 import random
 import constants as c
 
-physicsClient = p.connect(p.GUI)
-p.setAdditionalSearchPath(pybullet_data.getDataPath())
-p.setGravity(0,0,c.gravity)
-planeId = p.loadURDF("plane.urdf")
-robotId = p.loadURDF("body.urdf")
-p.loadSDF("world.sdf")
 
-pyrosim.Prepare_To_Simulate(robotId)
+
+robotId = p.loadURDF("body.urdf")
+
+
+
 
 # Back Leg
 targetAnglesBackLeg = numpy.zeros(c.iterations)
@@ -61,3 +62,4 @@ numpy.save('data/targetanglesfrontleg.npy', targetAnglesFrontLeg)
 #print("back", backLegSensorValues)
 #print("front", frontLegSensorValues)
 p.disconnect()
+"""
