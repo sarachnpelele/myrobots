@@ -1,21 +1,7 @@
 from simulation import SIMULATION
 simulation = SIMULATION()
+simulation.Run()
 """
-import pybullet as p
-import pybullet_data
-import time
-import pyrosim.pyrosim as pyrosim
-import numpy 
-from math import pi
-import random
-import constants as c
-
-
-
-robotId = p.loadURDF("body.urdf")
-
-
-
 
 # Back Leg
 targetAnglesBackLeg = numpy.zeros(c.iterations)
