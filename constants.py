@@ -3,11 +3,9 @@ from math import pi
 
 gravity = -9.8
 iterations = 1000
-sleep_time = 1/60
+sleep_time = 1/20
 
 max_force = 100
-
-two_pi = numpy.pi * 2
 
 # Back Leg
 ampBackLeg = numpy.pi/8

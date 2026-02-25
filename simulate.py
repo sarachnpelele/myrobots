@@ -1,51 +1,12 @@
+import constants as c
+from robot import ROBOT
 from simulation import SIMULATION
+from world import WORLD
+
+
 simulation = SIMULATION()
 simulation.Run()
-"""
 
-# Back Leg
-targetAnglesBackLeg = numpy.zeros(c.iterations)
-# Front Leg
-targetAnglesFrontLeg = numpy.zeros(c.iterations)
+world = WORLD()
+robot = ROBOT()
 
-backLegSensorValues = numpy.zeros(c.iterations)
-frontLegSensorValues = numpy.zeros(c.iterations)
-
-# generate vector of sinusoidally varying values
-firstVector = numpy.linspace(0, c.two_pi, c.iterations)
-# Back Leg
-for ind, each in enumerate(firstVector):
-    targetAnglesBackLeg[ind] = c.ampBackLeg * numpy.sin(c.freqBackLeg * each + c.phaseOffsetBackLeg)
-# Front Leg
-for ind, each in enumerate(firstVector):
-    targetAnglesFrontLeg[ind] = c.ampFrontLeg * numpy.sin(c.freqFrontLeg * each + c.phaseOffsetFrontLeg)
-
-
-for i in range(c.iterations):
-    p.stepSimulation()
-    backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
-    frontLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
-    pyrosim.Set_Motor_For_Joint(
-        bodyIndex = robotId ,
-        jointName = b'Torso_BackLeg',
-        controlMode = p.POSITION_CONTROL,
-        targetPosition = targetAnglesBackLeg[i],
-        maxForce = c.max_force)
-    pyrosim.Set_Motor_For_Joint(
-        bodyIndex = robotId ,
-        jointName = b'Torso_FrontLeg',
-        controlMode = p.POSITION_CONTROL,
-        targetPosition = targetAnglesFrontLeg[i],
-        maxForce = c.max_force)
-    time.sleep(c.sleep_time)
-
-
-#numpy.save("data/backLegSensorValues.npy", backLegSensorValues)
-#numpy.save("data/frontLegSensorValues.npy", frontLegSensorValues)
-numpy.save('data/targetanglesbackleg.npy', targetAnglesBackLeg)
-numpy.save('data/targetanglesfrontleg.npy', targetAnglesFrontLeg)
-
-#print("back", backLegSensorValues)
-#print("front", frontLegSensorValues)
-p.disconnect()
-"""

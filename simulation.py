@@ -12,34 +12,31 @@ from robot import ROBOT
 class SIMULATION:
 
     def __init__(self):
-        
-        self.physicsClient = p.connect(p.GUI)
-        p.setAdditionalSearchPath(pybullet_data.getDataPath())
-        p.setGravity(0,0,c.gravity)
 
         self.world = WORLD()
         self.robot = ROBOT()
 
-        pyrosim.Prepare_To_Simulate(self.robot.robotId)
+        
+        self.physicsClient = p.connect(p.GUI)
+        p.setAdditionalSearchPath(pybullet_data.getDataPath())
+        
+        p.setGravity(0,0,c.gravity)
+        p.loadSDF("world.sdf")
+        self.planeId = p.loadURDF("plane.urdf")
+        self.robotId = p.loadURDF("body.urdf")
+
+        pyrosim.Prepare_To_Simulate(self.robotId)
+        self.robot.Prepare_To_Sense()
+        self.robot.Prepare_To_Act()
 
     def Run(self):
         for i in range(c.iterations):
-            print(i)
             
             p.stepSimulation()
-            #backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
-            #frontLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
-            #pyrosim.Set_Motor_For_Joint(
-                #bodyIndex = robotId ,
-                #jointName = b'Torso_BackLeg',
-                #controlMode = p.POSITION_CONTROL,
-                #targetPosition = targetAnglesBackLeg[i],
-                #maxForce = c.max_force)
-            #pyrosim.Set_Motor_For_Joint(
-                #bodyIndex = robotId ,
-                #jointName = b'Torso_FrontLeg',
-                #controlMode = p.POSITION_CONTROL,
-                #targetPosition = targetAnglesFrontLeg[i],
-                #maxForce = c.max_force)
+            self.robot.Sense(i)
+            self.robot.Act(i,self.robotId)
             time.sleep(c.sleep_time)
-            
+    
+    def __del__(self):
+
+        p.disconnect()        
