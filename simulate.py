@@ -4,7 +4,7 @@ from simulation import SIMULATION
 from world import WORLD
 
 
-simulation = SIMULATION()
+simulation = SIMULATION() 
 simulation.Run()
 
 world = WORLD()
