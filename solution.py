@@ -4,9 +4,10 @@ import pyrosim.pyrosim as pyrosim
 import random as r
 
 class SOLUTION:
-    def __init__(self):
+    def __init__(self, nextAvailableID):
         self.weights = np.random.rand(3, 2)
         self.weights = self.weights * 2 - 1
+        self.myID = nextAvailableID
         
     def Evaluate(self, directOrGUI):
         self.Create_Body()
@@ -66,3 +67,6 @@ class SOLUTION:
         randomRow = r.randint(0,2)
         randomColumn = r.randint(0,1)
         self.weights[randomRow][randomColumn] = r.random() * 2 - 1 
+
+    def Set_ID(self, nextAvailableID):
+        self.myID = nextAvailableID
