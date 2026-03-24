@@ -8,12 +8,16 @@ from world import WORLD
 
 
 class SIMULATION:
-    def __init__(self) -> None:
+    def __init__(self, directOrGUI) -> None:
         self.robot = ROBOT()
         self.world = WORLD()
+        self.directOrGUI = directOrGUI
 
         # set up environment
-        self.physicsCLient = p.connect(p.GUI)
+        if self.directOrGUI == "DIRECT":
+            self.physicsCLient = p.connect(p.DIRECT)
+        else:
+            self.physicsCLient = p.connect(p.GUI)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
         # load world: the plane, the grey block, gravity

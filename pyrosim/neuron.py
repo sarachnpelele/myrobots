@@ -76,7 +76,7 @@ class NEURON:
 
         self.Set_Value(0)
 
-        print(self.Get_Value())
+        #print(self.Get_Value())
 
         for key in synapses:
 
