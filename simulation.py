@@ -47,6 +47,8 @@ class SIMULATION:
             self.robot.Act(it, self.robotId)
 
             time.sleep(c.sleep_time)
+            if self.directOrGUI == "GUI":
+                time.sleep(c.sleep_time)
 
     def __del__(self):
         # destructor: disconnect from the simulator
