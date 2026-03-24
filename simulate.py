@@ -10,3 +10,4 @@ simulation.Run()
 world = WORLD()
 robot = ROBOT()
 
+simulation.Get_Fitness()
