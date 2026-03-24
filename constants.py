@@ -17,3 +17,5 @@ freqFrontLeg = 20
 phaseOffsetFrontLeg = 0
 
 numberOfGenerations = 10
+
+populationSize = 2
