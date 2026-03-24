@@ -3,7 +3,7 @@ from math import pi
 
 gravity = -9.8
 iterations = 1000
-sleep_time = 1/60
+sleep_time = 1/240
 
 max_force = 100
 
