@@ -15,3 +15,5 @@ phaseOffsetBackLeg = 0
 ampFrontLeg = numpy.pi/4
 freqFrontLeg = 20
 phaseOffsetFrontLeg = 0
+
+numberOfGenerations = 2

@@ -13,6 +13,10 @@ class SOLUTION:
         self.Create_World()
         os.system("python3 simulate.py")
 
+        f = open("fitness.txt", "r")
+        self.fitness = f.read()
+        f.close()
+
     def Create_World(self):
 
         pyrosim.Start_SDF("world.sdf")
