@@ -2,6 +2,9 @@ import numpy as np
 import os
 import pyrosim.pyrosim as pyrosim
 import random as r
+import time
+
+tester = True
 
 class SOLUTION:
     def __init__(self, nextAvailableID):
@@ -9,15 +12,23 @@ class SOLUTION:
         self.weights = self.weights * 2 - 1
         self.myID = nextAvailableID
         
-    def Evaluate(self, directOrGUI):
-        self.Create_Body()
+    def Start_Simulation(self, directOrGUI):
+        if tester == False or self.myID == 0:
+            self.Create_Body()        
+            self.Create_World()
         self.Create_Brain()
-        self.Create_World()
         os.system("start /B python3 simulate.py " + directOrGUI + " " + str(self.myID))
 
-        f = open("fitness.txt", "r")
-        self.fitness = f.read()
+
+    def Wait_For_Simulation_To_End(self):
+        while not os.path.exists("fitness" + str(self.myID) + ".txt"):
+            time.sleep(1/100)
+
+        f = open("fitness" + str(self.myID) + ".txt", "r")
+        self.fitness = float(f.read())
         f.close()
+
+        os.system("del fitness"+str(self.myID)+".txt")
 
     def Create_World(self):
 

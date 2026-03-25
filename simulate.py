@@ -3,6 +3,7 @@ from robot import ROBOT
 from simulation import SIMULATION
 from world import WORLD
 import sys
+import os
 
 
 directOrGUI = sys.argv[1]
@@ -14,5 +15,7 @@ simulation.Run()
 
 world = WORLD()
 robot = ROBOT(solutionID)
+
+os.system("del brain"+str(solutionID)+".nndf")
 
 simulation.Get_Fitness()

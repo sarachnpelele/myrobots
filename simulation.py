@@ -48,7 +48,7 @@ class SIMULATION:
             # allow the robot to move, pass down current timestep
             self.robot.Act(it, self.robotId)
 
-            time.sleep(c.sleep_time)
+            
             if self.directOrGUI == "GUI":
                 time.sleep(c.sleep_time)
 
