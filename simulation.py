@@ -8,10 +8,12 @@ from world import WORLD
 
 
 class SIMULATION:
-    def __init__(self, directOrGUI) -> None:
-        self.robot = ROBOT()
-        self.world = WORLD()
+    def __init__(self, directOrGUI, solutionID) -> None:
         self.directOrGUI = directOrGUI
+        self.solutionID = solutionID
+        self.robot = ROBOT(self.solutionID)
+        self.world = WORLD()
+        
 
         # set up environment
         if self.directOrGUI == "DIRECT":
