@@ -5,6 +5,7 @@ from sensor import SENSOR
 import pybullet as p
 import os
 import constants as c
+import numpy as np
 
 class ROBOT:
     def __init__(self, solutionID) -> None:
@@ -22,6 +23,17 @@ class ROBOT:
         # loop through dict and run GetValue method on each sensor
         for s in self.sensors:
             self.sensors[s].Get_Value(it)
+
+        #CPG
+        x = 5 #frequency i set up for now
+        #Overwriting the BackLowerLeg sensor
+        self.sensors["BackLowerLeg"].values[it] = np.sin(x * it)
+        
+        #Logging the signal
+        if not hasattr(self, "cpg_log"):
+            self.cpg_log = []
+
+        self.cpg_log.append(np.sin(x * it))
 
     def Think(self):
         self.nn.Update()
@@ -47,7 +59,7 @@ class ROBOT:
                 self.motors[jointName].Set_Value(c.motorJointRange * desiredAngle, robotId)
         
     def Get_Fitness(self, robotId):
-        basePositionAndOrientation = p.getBasePositionAndOrientation(self.robot)
+        basePositionAndOrientation = p.getBasePositionAndOrientation(robotId)
         basePosition = basePositionAndOrientation[0]
         xCoordinateOfLinkZero = xPosition = basePosition[0]
         
@@ -57,5 +69,6 @@ class ROBOT:
         f.close()
         os.system("rename tmp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
 
-        #print("xcoord: ", xCoordinateOfLinkZero)
-        exit()
+        #Saving the CPG signal to a file
+        np.savetxt("cpg_signal_" + str(self.solutionID) + ".txt", self.cpg_log)
+        #exit()
