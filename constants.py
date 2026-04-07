@@ -16,9 +16,10 @@ ampFrontLeg = numpy.pi/4
 freqFrontLeg = 20
 phaseOffsetFrontLeg = 0
 
-numberOfGenerations = 1
+numberOfGenerations = 10
 
-populationSize = 1
+populationSize = 10
 
-numSensorNeurons = 3
-numMotorNeurons = 2
+numSensorNeurons = 5
+numMotorNeurons = 8
+motorJointRange = 0.2
