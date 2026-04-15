@@ -11,6 +11,7 @@ class ROBOT:
     def __init__(self, solutionID) -> None:
         self.nn = NEURAL_NETWORK("brain"+str(solutionID)+".nndf")
         self.solutionID = solutionID
+        self.x = 0.05
 
     def Prepare_To_Sense(self):
         self.sensors = {}
@@ -25,18 +26,18 @@ class ROBOT:
             self.sensors[s].Get_Value(it)
 
         #CPG
-        x = 5 #frequency i set up for now
         #Overwriting the BackLowerLeg sensor
-        self.sensors["BackLowerLeg"].values[it] = np.sin(x * it)
+        cpg_value = np.sin(self.x * it)
+        self.sensors["BackLowerLeg"].values[it] = cpg_value
         
         #Logging the signal
         if not hasattr(self, "cpg_log"):
             self.cpg_log = []
 
-        self.cpg_log.append(np.sin(x * it))
+        self.cpg_log.append(cpg_value)
 
-    def Think(self):
-        self.nn.Update()
+    def Think(self,it):
+        self.nn.Update(it, self.x)
         #self.nn.Print()
 
     def Prepare_To_Act(self):
