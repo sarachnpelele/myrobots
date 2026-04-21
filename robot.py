@@ -11,7 +11,7 @@ class ROBOT:
     def __init__(self, solutionID) -> None:
         self.nn = NEURAL_NETWORK("brain"+str(solutionID)+".nndf")
         self.solutionID = solutionID
-        self.x = 0.05
+        self.x = 0.1
 
     def Prepare_To_Sense(self):
         self.sensors = {}
