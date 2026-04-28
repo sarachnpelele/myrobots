@@ -6,12 +6,13 @@ import pybullet as p
 import os
 import constants as c
 import numpy as np
+import constants as c
 
 class ROBOT:
     def __init__(self, solutionID) -> None:
         self.nn = NEURAL_NETWORK("brain"+str(solutionID)+".nndf")
         self.solutionID = solutionID
-        self.x = 0.1
+        self.x = c.frequency
 
     def Prepare_To_Sense(self):
         self.sensors = {}
@@ -71,5 +72,5 @@ class ROBOT:
         os.system("rename tmp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
 
         #Saving the CPG signal to a file
-        np.savetxt("cpg_signal_" + str(self.solutionID) + ".txt", self.cpg_log)
+        #np.savetxt("cpg_signal_" + str(self.solutionID) + ".txt", self.cpg_log)
         #exit()

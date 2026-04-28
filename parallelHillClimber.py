@@ -2,15 +2,21 @@ from solution import SOLUTION
 import constants as c 
 import copy
 import os
+import numpy as np
 
 class PARALLEL_HILL_CLIMBER:
     def __init__(self):
 
         os.system("del brain*.nndf")
-        os.system("del fitness*.txt")
+        #os.system("del fitness*.txt")
+
+        for file in os.listdir():
+            if file.startswith("fitness") and file[7:].split(".")[0].isdigit():
+                os.remove(file)
         
         self.nextAvailableID = 0
         self.parents = {}
+        self.fitnessMatrix = np.zeros((c.populationSize, c.numberOfGenerations))
 
         for pop in range(c.populationSize):
             self.parents[pop] = SOLUTION(self.nextAvailableID)
@@ -21,13 +27,19 @@ class PARALLEL_HILL_CLIMBER:
         self.Evaluate(self.parents)
 
         for currentGeneration in range(c.numberOfGenerations):
-            self.Evolve_For_One_Generation()
+            self.Evolve_For_One_Generation(currentGeneration)
+    
+    
     
         
-    def Evolve_For_One_Generation(self):
+    def Evolve_For_One_Generation(self, currentGeneration):
         self.Spawn()
         self.Mutate()
         self.Evaluate(self.children)
+
+        for pop in range(c.populationSize):
+            self.fitnessMatrix[pop, currentGeneration] = self.children[pop].fitness
+
         self.Print()
         self.Select()
 
