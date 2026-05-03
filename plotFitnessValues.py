@@ -1,25 +1,31 @@
-import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
-A = np.load("fitness_A.npy")
-B = np.load("fitness_B.npy")
+CSV_FILE = "fitness_all_runs.csv"
 
-mA = np.mean(A, axis=0)
-sA = np.std(A, axis=0)
+df = pd.read_csv(CSV_FILE)
 
-mB = np.mean(B, axis=0)
-sB = np.std(B, axis=0)
+# Debug check: each run should have both A and B
+print(df.groupby(["run", "variant"]).size())
 
-x = range(len(mA))
+runs = sorted(df["run"].unique())
 
-plt.plot(x, mA, linewidth=3, label="A Low Frequency")
-plt.plot(x, mB, linewidth=3, label="B High Frequency")
+for run in runs:
 
-plt.fill_between(x, mA-sA, mA+sA, alpha=0.2)
-plt.fill_between(x, mB-sB, mB+sB, alpha=0.2)
+    A_data = df[(df["run"] == run) & (df["variant"] == "A")]
+    A_mean = A_data.groupby("generation")["fitness"].mean()
+
+    plt.plot(A_mean.index, A_mean.values, linewidth=1)
+    plt.text(A_mean.index[-1], A_mean.values[-1], f"A{run}", fontsize=8)
+
+    B_data = df[(df["run"] == run) & (df["variant"] == "B")]
+    B_mean = B_data.groupby("generation")["fitness"].mean()
+
+    plt.plot(B_mean.index, B_mean.values, linewidth=3)
+    plt.text(B_mean.index[-1], B_mean.values[-1], f"B{run}", fontsize=8)
 
 plt.xlabel("Generation")
 plt.ylabel("Average Fitness")
-plt.title("Preliminary A/B Test")
+plt.title("A/B Testing: One Line Per Run")
 plt.legend()
 plt.show()

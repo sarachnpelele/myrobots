@@ -19,7 +19,7 @@ class SOLUTION:
         self.Create_Brain()
         os.system("start /B python3 simulate.py " + directOrGUI + " " + str(self.myID))
 
-
+    """
     def Wait_For_Simulation_To_End(self):
         while not os.path.exists("fitness" + str(self.myID) + ".txt"):
             time.sleep(1/100)
@@ -29,7 +29,26 @@ class SOLUTION:
         f.close()
 
         os.system("del fitness"+str(self.myID)+".txt")
+    """
+    def Wait_For_Simulation_To_End(self):
+        fitness_file = "fitness" + str(self.myID) + ".txt"
 
+    # wait until file exists
+        while not os.path.exists(fitness_file):
+            time.sleep(0.01)
+
+    # now try reading it safely
+        while True:
+            try:
+                with open(fitness_file, "r") as f:
+                    self.fitness = float(f.read())
+                break
+            except (PermissionError, ValueError):
+                time.sleep(0.01)
+
+    # delete after reading
+        os.remove(fitness_file)
+    
     def Create_World(self):
 
         pyrosim.Start_SDF("world.sdf")
