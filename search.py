@@ -1,9 +1,11 @@
+
 import os
 import csv
 import constants as c
 from parallelHillClimber import PARALLEL_HILL_CLIMBER
 
 CSV_FILE = "fitness_all_runs.csv"
+RUNS_PER_EXECUTION = 100  # change this to 10, 20, etc.
 
 
 def get_next_run_number():
@@ -44,20 +46,37 @@ def save_matrix_to_csv(matrix, variant, frequency, run_number):
                 ])
 
 
-run_number = get_next_run_number()
+for i in range(RUNS_PER_EXECUTION):
+    run_number = get_next_run_number()
 
-# Run A first, but DO NOT save yet
-c.frequency = 0.01
-phcA = PARALLEL_HILL_CLIMBER()
-phcA.Evolve()
+    print("Starting A/B run", run_number)
 
-# Run B second, but DO NOT save yet
-c.frequency = 0.1
-phcB = PARALLEL_HILL_CLIMBER()
-phcB.Evolve()
+    # Run A
+    c.frequency = 0.05
+    phcA = PARALLEL_HILL_CLIMBER()
+    phcA.Evolve()
 
-# Only save after BOTH completed successfully
-save_matrix_to_csv(phcA.fitnessMatrix, "A", 0.01, run_number)
-save_matrix_to_csv(phcB.fitnessMatrix, "B", 0.1, run_number)
+    # Run B
+    c.frequency = 100
+    phcB = PARALLEL_HILL_CLIMBER()
+    phcB.Evolve()
 
-print("Saved complete A/B run", run_number)
+    # Save only after both complete
+    save_matrix_to_csv(phcA.fitnessMatrix, "A", 0.05, run_number)
+    save_matrix_to_csv(phcB.fitnessMatrix, "B", 100, run_number)
+
+    print("Saved complete A/B run", run_number)
+
+print("Finished all runs.")
+"""
+import os
+from parallelHillClimber import PARALLEL_HILL_CLIMBER
+
+"""#for i in range(5):
+    #os.system("python3 generate.py")
+    #os.system("python3 simulate.py")
+"""
+phc = PARALLEL_HILL_CLIMBER()
+phc.Evolve()
+phc.Show_Best()
+"""

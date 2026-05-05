@@ -24,4 +24,4 @@ numSensorNeurons = 5
 numMotorNeurons = 8
 motorJointRange = 0.2
 
-frequency = 0.01
+frequency = 0.05
