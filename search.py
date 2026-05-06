@@ -1,11 +1,11 @@
-
+"""
 import os
 import csv
 import constants as c
 from parallelHillClimber import PARALLEL_HILL_CLIMBER
 
-CSV_FILE = "fitness_all_runs.csv"
-RUNS_PER_EXECUTION = 5  # change this to 10, 20, etc.
+CSV_FILE = "fitness_all_runs30GEN1.csv"
+RUNS_PER_EXECUTION = 1
 
 
 def get_next_run_number():
@@ -77,8 +77,7 @@ from parallelHillClimber import PARALLEL_HILL_CLIMBER
     #os.system("python3 simulate.py")
 """
 phc = PARALLEL_HILL_CLIMBER()
-phc.Evaluate(phc.parents)
-phc.Show_Best()
+#phc.Evaluate(phc.parents)
+#phc.Show_Best()
 phc.Evolve() 
 phc.Show_Best()
-"""

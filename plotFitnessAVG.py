@@ -1,7 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv("fitness_all_runs.csv")
+CSV_FILE = "fitness_all_runs2.csv"
+
+df = pd.read_csv(CSV_FILE)
 
 # Step 1: average across solutions (within each run)
 run_means = df.groupby(["variant", "run", "generation"])["fitness"].mean().reset_index()
@@ -9,26 +11,37 @@ run_means = df.groupby(["variant", "run", "generation"])["fitness"].mean().reset
 # Step 2: average across runs
 summary = run_means.groupby(["variant", "generation"])["fitness"].agg(["mean", "std"]).reset_index()
 
+plt.figure(figsize=(10, 6))
+
 for variant in ["A", "B"]:
-    data = summary[summary["variant"] == variant]
+    data = summary[summary["variant"] == variant].copy()
 
+    x = data["generation"] + 1
+
+    y = data["mean"]
+
+    label = "Low frequency (0.05)" if variant == "A" else "High frequency (100)"
+    
     plt.plot(
-        data["generation"],
-        data["mean"],
+        x,
+        y,
         linewidth=3,
-        label=f"{variant} mean"
+        marker='o',
+        label=label
     )
-
-    # shading = variability across runs
+    
     plt.fill_between(
-        data["generation"],
-        data["mean"] - data["std"],
-        data["mean"] + data["std"],
-        alpha=0.2
+        x,
+        y - data["std"],
+        y + data["std"],
+        alpha=0.1
     )
-
+    
 plt.xlabel("Generation")
-plt.ylabel("Average Fitness")
-plt.title("A/B Testing: Average Across Runs (Mean ± Std)")
+plt.ylabel("Change in Average Fitness")
+plt.title("Effect of CPG Frequency on Locomotion Performance")
+plt.grid(True, linestyle='--', alpha=0.4)
 plt.legend()
+plt.tight_layout()
 plt.show()
+

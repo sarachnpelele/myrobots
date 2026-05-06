@@ -16,7 +16,7 @@ ampFrontLeg = numpy.pi/4
 freqFrontLeg = 20
 phaseOffsetFrontLeg = 0
 
-numberOfGenerations = 10
+numberOfGenerations = 30
 
 populationSize = 10
 
